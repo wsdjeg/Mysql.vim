@@ -7,40 +7,42 @@ endif
 
 fu! mysql#GetMysql_vim_classpath()
     if executable('mvn')
-        let mysqlvimdir = g:Mysql_vim_Home.'libs/mysqlvim'
+        let mysqlvimdir = g:Mysql_vim_Home.'/libs/mysqlvim'
         let lines = split(system('mvn -f '.mysqlvimdir.'/pom.xml dependency:build-classpath'),'\n')
         for i in range(len(lines))
             if lines[i] =~ 'Dependencies classpath:'
-                return lines[i+1]
+                return lines[i+1].':'.mysqlvimdir.'/target/classes'
             endif
         endfor
     endif
 endf
 
 function! mysql#GetConnection(...)
-    let g:Mysql_vim_classpath = get(g:,'Mysql_vim_classpath',mysql#GetMysql_vim_classpath())
-    let BaseCMD = 'java -cp '.g:Mysql_vim_classpath.' com.wsdjeg.mysqlvim.MysqlVi '
+    if !exists('g:Mysql_vim_classpath')
+        let g:Mysql_vim_classpath = mysql#GetMysql_vim_classpath()
+    endif
+    let s:BaseCMD = 'java -cp '.g:Mysql_vim_classpath.' com.wsdjeg.mysqlvim.MysqlVi '
     let s:userinfo = split(a:000[0],' ')[0].' '.split(a:000[0],' ')[1]
     let cmd = s:BaseCMD
-                \.'getconnection'
+                \.'--login'
                 \.' '
                 \.s:userinfo
     if cmd != ''
         if split(system(cmd),'\n')[0]=='true'
-            let g:JavaUnit_SQL_connected = 'true'
+            let g:Mysql_SQL_connected = 'true'
             echo 'Successfully connect to the database!'
         else
-            let g:JavaUnit_SQL_connected = 'false'
+            let g:Mysql_SQL_connected = 'false'
             echo 'connected failed!'
         endif
     endif
 endfunction
 
-fu! javaunit#JavaUnit_CloseConnection()
+fu! mysql#CloseConnection()
     call s:closeconnection()
 endfunction
 
-function! javaunit#JavaUnit_SQL_Use(...)
+function! mysql#SQL_Use(...)
     if s:hasSQLConnection()
         if a:1 == ''
             let s = input("please insert a databaseName?")
@@ -49,38 +51,29 @@ function! javaunit#JavaUnit_SQL_Use(...)
         else
             let s = a:000[0]
         endif
-        if get(g:,'JavaUnit_SQL_Driver','')!=''
-            let cmd = 'java -cp '
-                        \.g:JavaUnit_SQL_Driver
-                        \.':'
-                        \.g:JavaUnit_tempdir
-                        \.' com.wsdjeg.util.VimSqlUtils usedatabase '
-                        \.s
-                        \.' '
-                        \.s:userinfo
-        else
-            let cmd = ''
-        endif
-        if cmd != ''
-            if split(system(cmd),'\n')[0]=='true'
+        let cmd = s:BaseCMD
+                    \.'--use '
+                    \.s
+                    \.' '
+                    \.s:userinfo
+        let out_put = system(cmd)
+        if out_put != ''
+            if split(out_put,'\n')[0]=='true'
                 echo 'success change to '.s
-                let g:JavaUnit_SQL_DatabaseName = s
+                let g:Mysql_SQL_DatabaseName = s
             else
                 let input1 = input('database do not exists,create it (Y/N)? ')
                 echon "\r\r"
                 echon ''
                 if input1 == 'Y'||input1 =='y'
-                    let cmd = 'java -cp '
-                                \.g:JavaUnit_SQL_Driver
-                                \.':'
-                                \.g:JavaUnit_tempdir
-                                \.' com.wsdjeg.util.VimSqlUtils createdatabase '
+                    let cmd = s:BaseCMD
+                                \.'createdatabase '
                                 \.s
                                 \.' '
                                 \.s:userinfo
                     if split(system(cmd),'\n')[0]=='true'
                         echo 'create success,change to '.s
-                        let g:JavaUnit_SQL_DatabaseName = s
+                        let g:Mysql_SQL_DatabaseName = s
                     else
                         echo 'create failed!'
                     endif
@@ -92,22 +85,19 @@ function! javaunit#JavaUnit_SQL_Use(...)
     endif
 endfunction
 
-function! s:JavaUnit_SQL_drop_database(...)
+function! s:Mysql_SQL_drop_database(...)
     let input1 = input('try to delete '.a:1.' (Y/N)? ')
     echon "\r\r"
     echon ''
     if input1 == 'Y'||input1 =='y'
-        let cmd = 'java -cp '
-                    \.g:JavaUnit_SQL_Driver
-                    \.':'
-                    \.g:JavaUnit_tempdir
-                    \.' com.wsdjeg.util.VimSqlUtils dropdatabase '
+        let cmd = s:BaseCMD
+                    \.'dropdatabase '
                     \.a:1
                     \.' '
                     \.s:userinfo
         if split(system(cmd),'\n')[0]=='true'
             echo 'delete success ! '
-            let g:JavaUnit_SQL_DatabaseName = ''
+            let g:Mysql_SQL_DatabaseName = ''
         else
             echo 'no such database!'
         endif
@@ -115,18 +105,15 @@ function! s:JavaUnit_SQL_drop_database(...)
         echo 'byby!'
     endif
 endf
-function! s:JavaUnit_SQL_drop_table(...)
+function! s:Mysql_SQL_drop_table(...)
     if s:hasDatabaseName()
         let input1 = input('try to delete '.a:1.' (Y/N)? ')
         echon "\r\r"
         echon ''
         if input1 == 'Y'||input1 =='y'
-            let cmd = 'java -cp '
-                        \.g:JavaUnit_SQL_Driver
-                        \.':'
-                        \.g:JavaUnit_tempdir
-                        \.' com.wsdjeg.util.VimSqlUtils droptable '
-                        \.g:JavaUnit_SQL_DatabaseName
+            let cmd = s:BaseCMD
+                        \.'droptable '
+                        \.g:Mysql_SQL_DatabaseName
                         \.' '
                         \.a:1
                         \.' '
@@ -142,25 +129,22 @@ function! s:JavaUnit_SQL_drop_table(...)
     endif
 endf
 
-function! javaunit#JavaUnit_SQL_drop(...)
+function! mysql#SQL_drop(...)
     if s:hasSQLConnection()
         if split(a:000[0],' ')[0]=='database'
-            call s:JavaUnit_SQL_drop_database(split(a:000[0],' ')[1])
+            call s:Mysql_SQL_drop_database(split(a:000[0],' ')[1])
         elseif split(a:000[0],' ')[0]=='table'
-            call s:JavaUnit_SQL_drop_table(split(a:000[0],' ')[1])
+            call s:Mysql_SQL_drop_table(split(a:000[0],' ')[1])
         else
             echo 'wrong input!'
         endif
     endif
 endfunction
 
-function! javaunit#JavaUnit_SQL_Insert(...)
+function! mysql#SQL_Insert(...)
     if s:hasSQLConnection()&&s:hasDatabaseName()
-        let cmd = 'java -cp '
-                    \.g:JavaUnit_SQL_Driver
-                    \.':'
-                    \.g:JavaUnit_tempdir
-                    \.' com.wsdjeg.util.VimSqlUtils insert '
+        let cmd = s:BaseCMD
+                    \.'insert '
                     \.g:JavaUnit_SQL_DatabaseName
         for a in a:000
             let cmd .= ' '.a
@@ -170,7 +154,7 @@ function! javaunit#JavaUnit_SQL_Insert(...)
 endfunction
 
 function! s:hasDatabaseName()
-    if get(g:,'JavaUnit_SQL_DatabaseName','')!=''
+    if get(g:,'Mysql_SQL_DatabaseName','')!=''
         return 1
     else
         echo 'please select a database!'
@@ -179,7 +163,7 @@ function! s:hasDatabaseName()
 endf
 
 function! s:hasSQLConnection()
-    if get(g:,'JavaUnit_SQL_connected','false')=='true'
+    if get(g:,'Mysql_SQL_connected','false')=='true'
         return 1
     else
         echo 'no connection!'

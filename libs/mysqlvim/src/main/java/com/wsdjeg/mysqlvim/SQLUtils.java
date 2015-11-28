@@ -13,10 +13,8 @@ public class SQLUtils {
         Connection conn = DriverManager.getConnection(MVRequest.BASEURL+"information_schema",username,password);
         if (conn != null) {
             UserInfo.init(username,password);
-            System.out.println("login success!");
             return true;
         }else{
-            System.out.println("wrong username or password!");
             return false;
         }
     }

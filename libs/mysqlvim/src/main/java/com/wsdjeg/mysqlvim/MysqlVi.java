@@ -9,7 +9,7 @@ public class MysqlVi {
             case MVRequest.LOGIN:
                 if (args.length==3) {
                     try {
-                        SQLUtils.getConnection(args[1],args[2]);
+                        System.out.println(SQLUtils.getConnection(args[1],args[2]));
                     } catch(Exception e){
                         e.printStackTrace();
                     }
@@ -20,6 +20,11 @@ public class MysqlVi {
             case MVRequest.LOGOUT:
                 break;
             case MVRequest.USE:
+                try {
+                    System.out.println(SQLUtils.useDatabase(args[1],args[2],args[3]));
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case MVRequest.DROPDATABASE:
                 try {
