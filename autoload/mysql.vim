@@ -2,25 +2,29 @@ if exists("g:Mysql_autoloaded")&&g:Mysql_autoloaded==1
     finish
 else
     let g:Mysql_autoloaded=1
+    let g:Mysql_vim_Home = fnamemodify(expand('<sfile>'), ':p:h:h:gs?\\?/?')
 endif
 
-let s:BaseCMD = 'java -cp '
-            \.g:Mysql_vim_classpath
-            \.' com.wsdjeg.mysqlvim.MysqlVi '
-
-function javaunit#JavaUnit_GetClassPath()
-endfunction
-
-function! javaunit#JavaUnit_GetConnection(...)
-    let s:userinfo = split(a:000[0],' ')[0].' '.split(a:000[0],' ')[1]
-    if get(g:,'JavaUnit_SQL_Driver','')!=''
-        let cmd = s:BaseCMD
-                    \.'getconnection'
-                    \.' '
-                    \.s:userinfo
-    else
-        let cmd = ''
+fu! mysql#GetMysql_vim_classpath()
+    if executable('mvn')
+        let mysqlvimdir = g:Mysql_vim_Home.'libs/mysqlvim'
+        let lines = split(system('mvn -f '.mysqlvimdir.'/pom.xml dependency:build-classpath'),'\n')
+        for i in range(len(lines))
+            if lines[i] =~ 'Dependencies classpath:'
+                return lines[i+1]
+            endif
+        endfor
     endif
+endf
+
+function! mysql#GetConnection(...)
+    let g:Mysql_vim_classpath = get(g:,'Mysql_vim_classpath',mysql#GetMysql_vim_classpath())
+    let BaseCMD = 'java -cp '.g:Mysql_vim_classpath.' com.wsdjeg.mysqlvim.MysqlVi '
+    let s:userinfo = split(a:000[0],' ')[0].' '.split(a:000[0],' ')[1]
+    let cmd = s:BaseCMD
+                \.'getconnection'
+                \.' '
+                \.s:userinfo
     if cmd != ''
         if split(system(cmd),'\n')[0]=='true'
             let g:JavaUnit_SQL_connected = 'true'
