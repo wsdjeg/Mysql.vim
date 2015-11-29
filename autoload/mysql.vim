@@ -144,7 +144,7 @@ endfunction
 function! mysql#SQL_Insert(...)
     if s:hasSQLConnection()&&s:hasDatabaseName()
         let cmd = s:BaseCMD
-                    \.'insert '
+                    \.'--insert '
                     \.g:JavaUnit_SQL_DatabaseName
         for a in a:000
             let cmd .= ' '.a

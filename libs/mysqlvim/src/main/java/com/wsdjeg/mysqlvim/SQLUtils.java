@@ -79,6 +79,35 @@ public class SQLUtils {
         s.executeUpdate(sql);
         conn.close();
         return !useDatabase(databaseName,username,password);
-
+    }
+    public static boolean insert(String databaseName,String tableName,String username,String password,String[] args){
+        if (args.length%2==0) {
+            String  sql = "insert into " + tableName + "(";
+            for (int i = 0; i <args.length/2; i++) {
+                if (i == args.length/2-1) {
+                    sql += args[i];
+                }else{
+                    sql += args[i]+",";
+                }
+            }
+            sql += ") values(";
+            for (int i = args.length/2; i<args.length; i++) {
+                if (i == args.length - 1) {
+                    sql += args[i];
+                }else{
+                    sql += args[i]+",";
+                }
+            }
+            sql += ")";
+            try {
+                Connection conn =DriverManager.getConnection(MVRequest.BASEURL+databaseName,username,password);
+                Statement s=conn.createStatement();
+                s.executeUpdate(sql);
+                conn.close();
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 }

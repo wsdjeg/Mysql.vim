@@ -47,6 +47,13 @@ public class MysqlVi {
                     e.printStackTrace();
                 }
                 break;
+            case MVRequest.INSERT:
+                try {
+                    //TODO
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 }
