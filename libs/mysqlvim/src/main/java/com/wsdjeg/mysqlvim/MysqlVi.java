@@ -55,6 +55,9 @@ public class MysqlVi {
                     e.printStackTrace();
                 }
                 break;
+            case MVRequest.INIT:
+                MVRequest.init();
+                break;
         }
     }
 }

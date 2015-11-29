@@ -17,14 +17,24 @@ fu! mysql#GetMysql_vim_classpath()
     endif
 endf
 
+fu! s:mysqlargsinit()
+    let cmd = s:BaseCMD . '--init'
+    let lines = split(system(cmd),'\n')
+    let s:mysqlproperties={}
+    for line in lines
+        let s:mysqlproperties[split(line,'==')[0]]=split(line,'==')[1]
+    endfor
+endf
+
 function! mysql#GetConnection(...)
     if !exists('g:Mysql_vim_classpath')
         let g:Mysql_vim_classpath = mysql#GetMysql_vim_classpath()
     endif
     let s:BaseCMD = 'java -cp '.g:Mysql_vim_classpath.' com.wsdjeg.mysqlvim.MysqlVi '
+    call s:mysqlargsinit()
     let s:userinfo = split(a:000[0],' ')[0].' '.split(a:000[0],' ')[1]
     let cmd = s:BaseCMD
-                \.'--login'
+                \.get(s:mysqlproperties,'LOGIN')
                 \.' '
                 \.s:userinfo
     if cmd != ''
@@ -66,7 +76,8 @@ function! mysql#SQL_Use(...)
         endif
         if s!=''
             let cmd = s:BaseCMD
-                        \.'--use '
+                        \.get(s:mysqlproperties,'USE')
+                        \.' '
                         \.s
                         \.' '
                         \.s:userinfo
@@ -81,7 +92,8 @@ function! mysql#SQL_Use(...)
                     echon ''
                     if input1 == 'Y'||input1 =='y'
                         let cmd = s:BaseCMD
-                                    \.'--createdatabase '
+                                    \.get(s:mysqlproperties,'CREATEDATABASE')
+                                    \.' '
                                     \.s
                                     \.' '
                                     \.s:userinfo
@@ -108,7 +120,8 @@ function! s:Mysql_SQL_drop_database(...)
     echon ''
     if input1 == 'Y'||input1 =='y'
         let cmd = s:BaseCMD
-                    \.'--dropdatabase '
+                    \.get(s:mysqlproperties,'DROPDATABASE')
+                    \.' '
                     \.a:1
                     \.' '
                     \.s:userinfo
@@ -129,7 +142,8 @@ function! s:Mysql_SQL_drop_table(...)
         echon ''
         if input1 == 'Y'||input1 =='y'
             let cmd = s:BaseCMD
-                        \.'--droptable '
+                        \.get(s:mysqlproperties,'DROPTABLE')
+                        \.' '
                         \.g:Mysql_SQL_DatabaseName
                         \.' '
                         \.a:1
@@ -161,7 +175,8 @@ endfunction
 function! mysql#SQL_Insert(...)
     if s:hasSQLConnection()&&s:hasDatabaseName()
         let cmd = s:BaseCMD
-                    \.'--insert '
+                    \.get(s:mysqlproperties,'INSERT')
+                    \.' '
                     \.g:Mysql_SQL_DatabaseName
                     \.' '
                     \.s:userinfo
