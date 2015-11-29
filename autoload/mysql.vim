@@ -67,7 +67,7 @@ function! mysql#SQL_Use(...)
                 echon ''
                 if input1 == 'Y'||input1 =='y'
                     let cmd = s:BaseCMD
-                                \.'createdatabase '
+                                \.'--createdatabase '
                                 \.s
                                 \.' '
                                 \.s:userinfo
@@ -91,7 +91,7 @@ function! s:Mysql_SQL_drop_database(...)
     echon ''
     if input1 == 'Y'||input1 =='y'
         let cmd = s:BaseCMD
-                    \.'dropdatabase '
+                    \.'--dropdatabase '
                     \.a:1
                     \.' '
                     \.s:userinfo
@@ -112,7 +112,7 @@ function! s:Mysql_SQL_drop_table(...)
         echon ''
         if input1 == 'Y'||input1 =='y'
             let cmd = s:BaseCMD
-                        \.'droptable '
+                        \.'--droptable '
                         \.g:Mysql_SQL_DatabaseName
                         \.' '
                         \.a:1
@@ -173,7 +173,7 @@ endf
 
 fu! s:closeconnection()
     if s:hasSQLConnection()
-        call s:JavaUnit_unlet('g:JavaUnit_SQL_DatabaseName','g:JavaUnit_SQL_connected','s:userinfo')
+        call s:JavaUnit_unlet('g:Mysql_SQL_DatabaseName','g:Mysql_SQL_connected','s:userinfo')
     endif
 endf
 fu! s:JavaUnit_unlet(...)

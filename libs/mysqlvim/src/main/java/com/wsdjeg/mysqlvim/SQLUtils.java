@@ -19,30 +19,6 @@ public class SQLUtils {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            if(args[0].equals("getconnection")&&args.length==3){
-                System.out.println(getConnection(args[1],args[2]));
-            }
-            else if (args[0].equals("usedatabase")&&args.length==4){
-                System.out.println(useDatabase(args[1],args[2],args[3]));
-
-            }
-            else if (args[0].equals("createdatabase")&&args.length==4){
-                System.out.println(createDatabase(args[1],args[2],args[3]));
-            }
-            else if (args[0].equals("dropdatabase")&&args.length==4){
-                System.out.println(dropDatabase(args[1],args[2],args[3]));
-            }else if(args[0].equals("droptable")&&args.length==5){
-                System.out.println(droptable(args[1],args[2],args[3],args[4]));
-            }else if(args[0].equals("insert")&&args.length > 5&&args.length%2==1){
-
-            }else{
-            }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
     public static boolean droptable(String databaseName,String tableName,String username,String password)
         throws IOException,SQLException,ClassNotFoundException{
         Class.forName("com.mysql.jdbc.Driver");

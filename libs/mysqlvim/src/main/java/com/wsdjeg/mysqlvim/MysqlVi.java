@@ -33,6 +33,20 @@ public class MysqlVi {
                     e.printStackTrace();
                 }
                 break;
+            case MVRequest.DROPTABLE:
+                try {
+                    System.out.println(SQLUtils.droptable(args[1],args[2],args[3],args[4]));
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                break;
+            case MVRequest.CREATEDATABASE:
+                try {
+                    System.out.println(SQLUtils.createDatabase(args[1],args[2],args[3]));
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                break;
         }
     }
 }
