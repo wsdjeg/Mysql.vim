@@ -49,7 +49,8 @@ public class MysqlVi {
                 break;
             case MVRequest.INSERT:
                 try {
-                    //TODO
+                    String argsm[] = {args[5],args[6],args[7],args[8]};
+                    System.out.println(SQLUtils.insert(args[1],args[2],args[3],args[4],argsm));
                 } catch(Exception e){
                     e.printStackTrace();
                 }

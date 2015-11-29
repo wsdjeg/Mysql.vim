@@ -8,6 +8,9 @@ command! -nargs=*
             \ SQLUse
             \ call mysql#SQL_Use(<q-args>)
 command! -nargs=*
+            \ SQLCreate
+            \ call mysql#SQL_Create(<q-args>)
+command! -nargs=*
             \ SQLDrop
             \ call mysql#SQL_drop(<q-args>)
 command! -nargs=*

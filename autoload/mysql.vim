@@ -42,6 +42,19 @@ fu! mysql#CloseConnection()
     call s:closeconnection()
 endfunction
 
+fu! mysql#SQL_Create(...)
+    if s:hasSQLConnection()&&s:hasDatabaseName()
+        if len(a:000)%2==1
+            let cmd = s:BaseCMD
+                        \.'--create '
+            for a in a:000
+                let cmd .= a.' '
+            endfor
+            echo cmd
+        endif
+    endif
+endf
+
 function! mysql#SQL_Use(...)
     if s:hasSQLConnection()
         if a:1 == ''
@@ -51,36 +64,40 @@ function! mysql#SQL_Use(...)
         else
             let s = a:000[0]
         endif
-        let cmd = s:BaseCMD
-                    \.'--use '
-                    \.s
-                    \.' '
-                    \.s:userinfo
-        let out_put = system(cmd)
-        if out_put != ''
-            if split(out_put,'\n')[0]=='true'
-                echo 'success change to '.s
-                let g:Mysql_SQL_DatabaseName = s
-            else
-                let input1 = input('database do not exists,create it (Y/N)? ')
-                echon "\r\r"
-                echon ''
-                if input1 == 'Y'||input1 =='y'
-                    let cmd = s:BaseCMD
-                                \.'--createdatabase '
-                                \.s
-                                \.' '
-                                \.s:userinfo
-                    if split(system(cmd),'\n')[0]=='true'
-                        echo 'create success,change to '.s
-                        let g:Mysql_SQL_DatabaseName = s
-                    else
-                        echo 'create failed!'
-                    endif
+        if s!=''
+            let cmd = s:BaseCMD
+                        \.'--use '
+                        \.s
+                        \.' '
+                        \.s:userinfo
+            let out_put = system(cmd)
+            if out_put != ''
+                if split(out_put,'\n')[0]=='true'
+                    echo 'success change to '.s
+                    let g:Mysql_SQL_DatabaseName = s
                 else
-                    echo 'byby!'
+                    let input1 = input('database do not exists,create it (Y/N)? ')
+                    echon "\r\r"
+                    echon ''
+                    if input1 == 'Y'||input1 =='y'
+                        let cmd = s:BaseCMD
+                                    \.'--createdatabase '
+                                    \.s
+                                    \.' '
+                                    \.s:userinfo
+                        if split(system(cmd),'\n')[0]=='true'
+                            echo 'create success,change to '.s
+                            let g:Mysql_SQL_DatabaseName = s
+                        else
+                            echo 'create failed!'
+                        endif
+                    else
+                        echo 'byby!'
+                    endif
                 endif
             endif
+        else
+            echo 'databaseName should not be empty!'
         endif
     endif
 endfunction
@@ -145,11 +162,19 @@ function! mysql#SQL_Insert(...)
     if s:hasSQLConnection()&&s:hasDatabaseName()
         let cmd = s:BaseCMD
                     \.'--insert '
-                    \.g:JavaUnit_SQL_DatabaseName
+                    \.g:Mysql_SQL_DatabaseName
+                    \.' '
+                    \.s:userinfo
+                    \.' '
         for a in a:000
             let cmd .= ' '.a
         endfor
-        "TODO
+        let out_put =split(system(cmd),'\n')
+        if out_put[0]=='true'
+            echo 'insert success!'
+        else
+            echo 'failed!'
+        endif
     endif
 endfunction
 

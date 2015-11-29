@@ -80,7 +80,7 @@ public class SQLUtils {
         conn.close();
         return !useDatabase(databaseName,username,password);
     }
-    public static boolean insert(String databaseName,String tableName,String username,String password,String[] args){
+    public static boolean insert(String databaseName,String username,String password,String tableName,String[] args){
         if (args.length%2==0) {
             String  sql = "insert into " + tableName + "(";
             for (int i = 0; i <args.length/2; i++) {
@@ -93,9 +93,9 @@ public class SQLUtils {
             sql += ") values(";
             for (int i = args.length/2; i<args.length; i++) {
                 if (i == args.length - 1) {
-                    sql += args[i];
+                    sql += "'"+args[i]+"'";
                 }else{
-                    sql += args[i]+",";
+                    sql += "'"+args[i]+"',";
                 }
             }
             sql += ")";
@@ -104,8 +104,10 @@ public class SQLUtils {
                 Statement s=conn.createStatement();
                 s.executeUpdate(sql);
                 conn.close();
+                return true;
             } catch(Exception e){
                 e.printStackTrace();
+                return false;
             }
         }
         return false;
