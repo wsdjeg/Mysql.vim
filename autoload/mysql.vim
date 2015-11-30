@@ -209,6 +209,19 @@ function! mysql#SQL_Insert(...)
     endif
 endfunction
 
+fu! mysql#SQL_Select(...)
+    if s:hasSQLConnection()&&s:hasDatabaseName()
+        let cmd = s:BaseCMD
+                    \.get(s:mysqlproperties,'SELECT')
+                    \.' '
+                    \.g:Mysql_SQL_DatabaseName
+                    \.' '
+                    \.s:userinfo
+                    \.' '
+        "TODO
+    endif
+endf
+
 function! s:hasDatabaseName()
     if get(g:,'Mysql_SQL_DatabaseName','')!=''
         return 1

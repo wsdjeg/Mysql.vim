@@ -16,3 +16,6 @@ command! -nargs=*
 command! -nargs=*
             \ SQLInsert
             \ call mysql#SQL_Insert(<q-args>)
+command! -nargs=*
+            \ SQLSelect
+            \ call mysql#SQL_Select(<q-args>)
