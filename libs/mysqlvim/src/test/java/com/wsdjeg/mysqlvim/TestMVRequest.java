@@ -14,4 +14,10 @@ public class TestMVRequest {
             e.printStackTrace();
         }
     }
+    class TestMVRequestInnerclass {
+        
+    }
+    public static void test1(){
+
+    }
 }
