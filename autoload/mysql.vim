@@ -56,11 +56,27 @@ fu! mysql#SQL_Create(...)
     if s:hasSQLConnection()&&s:hasDatabaseName()
         if len(a:000)%2==1
             let cmd = s:BaseCMD
-                        \.'--create '
+                        \.get(s:mysqlproperties,'CREATETABLE')
+                        \.' '
+                        \.g:Mysql_SQL_DatabaseName
+                        \.' '
+                        \.s:userinfo
+                        \.' '
             for a in a:000
                 let cmd .= a.' '
             endfor
-            echo cmd
+            let cmd = substitute(cmd,'(','\\(','g')
+            let cmd = substitute(cmd,')','\\)','g')
+            let out_put = system(cmd)
+            if out_put != ''
+                if split(out_put,'\n')[0]=='true'
+                    echo 'create table success!'
+                else
+                    echo 'failed!'
+                endif
+            endif
+        else
+            echo 'args numbers error!'
         endif
     endif
 endf

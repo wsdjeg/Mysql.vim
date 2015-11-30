@@ -112,4 +112,31 @@ public class SQLUtils {
         }
         return false;
     }
+    public static boolean createTable(String databaseName,String username,String password,String tableName,String[] args){
+        //--createtable test root 1234 produce price int name char
+        if (args.length%2==0) {
+            String sql = "create table "
+                + tableName
+                + "(";
+            for (int i = 0; i < args.length-1;i++ ) {
+                if (i%2==0) {
+                    sql += args[i]+" ";
+                }else{
+                    sql += args[i]+",";
+                }
+            }
+            sql += args[args.length-1]+")";
+            try {
+                Connection conn =DriverManager.getConnection(MVRequest.BASEURL+databaseName,username,password);
+                Statement s=conn.createStatement();
+                s.executeUpdate(sql);
+                conn.close();
+                return true;
+            } catch(Exception e){
+                return false;
+            }
+
+        }
+        return false;
+    }
 }

@@ -10,4 +10,8 @@ public class TestSQLUtils {
             e.printStackTrace();
         }
     }
+    public void testCreateTable(){
+        String[] a = {"price","int"};
+        SQLUtils.createTable("test","root","1234","product",a);
+    }
 }

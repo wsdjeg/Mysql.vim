@@ -1,6 +1,8 @@
 package com.wsdjeg.mysqlvim;
 
 import com.wsdjeg.mysqlvim.SQLUtils;
+import java.util.List;
+import java.util.ArrayList;
 
 public class MysqlVi {
     public static String databaseName;
@@ -36,6 +38,18 @@ public class MysqlVi {
             case MVRequest.DROPTABLE:
                 try {
                     System.out.println(SQLUtils.droptable(args[1],args[2],args[3],args[4]));
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                break;
+            case MVRequest.CREATETABLE:
+                try {
+                    List<String> largs = new ArrayList<>();
+                    for (int i = 5 ; i < args.length; i++) {
+                        largs.add(args[i]);
+                    }
+                    String[] argsm = largs.toArray(new String[largs.size()]);
+                    System.out.println(SQLUtils.createTable(args[1],args[2],args[3],args[4],argsm));
                 } catch(Exception e){
                     e.printStackTrace();
                 }
