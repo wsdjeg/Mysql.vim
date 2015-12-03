@@ -124,4 +124,11 @@ public class JDBCTools{
 	public static Connection getConnection() throws Exception{
         return null;
 	}
+
+    public static Connection getConnection(String databaseName,String username,String password){
+        return null;
+    }
+    public static Connection getConnection(String username,String password){
+        return null;
+    }
 }
