@@ -1,16 +1,18 @@
 package com.wsdjeg.mysqlvim.util;
+import com.wsdjeg.mysqlvim.MVRequest;
 import com.wsdjeg.mysqlvim.util.ReflectionUtils;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSetMetaData;
-import java.util.Map;
-import java.util.HashMap;
-import java.sql.Statement;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.sql.DataSource;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import javax.sql.DataSource;
 public class JDBCTools{
 	//处理事务相关方法
 	//提交事务
@@ -125,10 +127,13 @@ public class JDBCTools{
         return null;
 	}
 
-    public static Connection getConnection(String databaseName,String username,String password){
-        return null;
+    public static Connection getConnection(String username,String password)
+        throws SQLException,ClassNotFoundException{
+        Class.forName("com.mysql.jdbc.Driver");
+        Connection conn = DriverManager.getConnection(MVRequest.BASEURL+"information_schema",username,password);
+        return conn;
     }
-    public static Connection getConnection(String username,String password){
+    public static Connection getConnection(String databaseName,String username,String password){
         return null;
     }
 }
