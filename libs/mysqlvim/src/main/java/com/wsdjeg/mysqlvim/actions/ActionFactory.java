@@ -9,6 +9,10 @@ public class ActionFactory {
                 return new LoginAction();
             case MVRequest.INIT:
                 return new InitAction();
+            case MVRequest.USE:
+                return new UseDatabaseAction();
+            case MVRequest.CREATEDATABASE:
+                return new CreateDatabaseAction();
         }
         return null;
     }

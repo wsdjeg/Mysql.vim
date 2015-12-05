@@ -17,14 +17,14 @@ fu! mysql#GetMysql_vim_classpath()
     endif
 endf
 
-fu! s:mysqlargsinit()
+function! s:mysqlargsinit()
     let cmd = s:BaseCMD . '--init'
     let lines = split(system(cmd),'\n')
     let s:mysqlproperties={}
     for line in lines
         let s:mysqlproperties[split(line,'==')[0]]=split(line,'==')[1]
     endfor
-endf
+endfunction
 
 function! mysql#GetConnection(...)
     if !exists('g:Mysql_vim_classpath')

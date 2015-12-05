@@ -11,7 +11,7 @@ public class MVRequest {
     public final static String BASEURL = "jdbc:mysql://localhost/";
     public final static String DROPDATABASE = "--dropdatabase";
     public final static String DROPTABLE = "--droptable";
-    public final static String INIT = "--init";
+    public final static String INIT = "--Init";
     public static void init(){
         try {
             Class<?> clazz = Class.forName(getClassNameForStatic());

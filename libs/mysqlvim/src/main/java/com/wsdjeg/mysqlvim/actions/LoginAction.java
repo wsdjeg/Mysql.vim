@@ -13,7 +13,8 @@ public class LoginAction implements Action {
             if (JDBCTools.getConnection(agrs[0],agrs[1],agrs[2])!=null){
                 System.out.println(true);
             }
+        }else{
+            System.out.println(false);
         }
-        System.out.println(false);
     }
 }
