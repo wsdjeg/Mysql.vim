@@ -13,6 +13,10 @@ public class ActionFactory {
                 return new UseDatabaseAction();
             case MVRequest.CREATEDATABASE:
                 return new CreateDatabaseAction();
+            case MVRequest.DROPDATABASE:
+                return new DropDatabaseAction();
+            case MVRequest.CREATETABLE:
+                return new CreateTableAction();
         }
         return null;
     }

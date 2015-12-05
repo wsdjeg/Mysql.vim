@@ -11,7 +11,8 @@ public class MysqlVi {
         try {
             ActionFactory.getAction(args[0]).run(ActionFactory.getArgs(args));
         } catch(Exception e){
-            System.out.println(false);
+            //System.out.println(false);
+            e.printStackTrace();
         }
     }
 }

@@ -1,6 +1,9 @@
 package com.wsdjeg.mysqlvim;
 import java.lang.reflect.Field;
 public class MVRequest {
+    //can not be changed
+    public final static String INIT = "--init";
+    //can be changed
     public final static String LOGIN = "--login";
     public final static String LOGOUT = "--logout";
     public final static String USE = "--use";
@@ -11,7 +14,6 @@ public class MVRequest {
     public final static String BASEURL = "jdbc:mysql://localhost/";
     public final static String DROPDATABASE = "--dropdatabase";
     public final static String DROPTABLE = "--droptable";
-    public final static String INIT = "--Init";
     public static void init(){
         try {
             Class<?> clazz = Class.forName(getClassNameForStatic());
