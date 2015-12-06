@@ -7,11 +7,11 @@ import java.sql.Statement;
 
 public class CreateTableAction implements Action{
     public void run(String[] args) {
-        if (args.length%2==0) {
+        if (args.length%2==0&&args.length >= 4) {
             String sql = "create table "
                 + args[3]
                 + "(";
-            for (int i = 0; i < args.length-1;i++ ) {
+            for (int i = 4; i < args.length-1;i++ ) {
                 if (i%2==0) {
                     sql += args[i]+" ";
                 }else{
@@ -24,13 +24,14 @@ public class CreateTableAction implements Action{
                 Statement s=conn.createStatement();
                 s.executeUpdate(sql);
                 conn.close();
-                //return true;
+                System.out.println(true);
             } catch(Exception e){
-                //return false;
+                System.out.println(false);
+                e.printStackTrace();
             }
 
+        }else{
+            System.out.println(false);
         }
-        //return false;
-        
     }
 }

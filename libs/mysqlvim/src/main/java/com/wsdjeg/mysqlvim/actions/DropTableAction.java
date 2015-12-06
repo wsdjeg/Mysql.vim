@@ -21,9 +21,9 @@ public class DropTableAction implements Action {
             if(!resultSet.next()){
                 conn.close();
                 resultSet.close();
-                System.out.println(false);
-            }else{
                 System.out.println(true);
+            }else{
+                System.out.println(false);
             }
         }else{
             conn.close();

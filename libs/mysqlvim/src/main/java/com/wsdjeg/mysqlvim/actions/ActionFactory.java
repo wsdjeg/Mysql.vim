@@ -17,6 +17,8 @@ public class ActionFactory {
                 return new DropDatabaseAction();
             case MVRequest.CREATETABLE:
                 return new CreateTableAction();
+            case MVRequest.DROPTABLE:
+                return new DropTableAction();
         }
         return null;
     }
