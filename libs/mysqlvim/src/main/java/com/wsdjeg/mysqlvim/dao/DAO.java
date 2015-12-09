@@ -1,7 +1,6 @@
 package com.wsdjeg.mysqlvim.dao;
 
 import java.util.List;
-
 public interface DAO<T> {
 	/**
 	 * 执行插入操作,返回执行以后的ID
