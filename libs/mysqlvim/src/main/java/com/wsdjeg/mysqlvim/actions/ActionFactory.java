@@ -3,23 +3,33 @@ package com.wsdjeg.mysqlvim.action;
 import com.wsdjeg.mysqlvim.MVRequest;
 
 public class ActionFactory {
+    public final static String LOGIN = "--login";
+    public final static String LOGOUT = "--logout";
+    public final static String USE = "--use";
+    public final static String CREATEDATABASE = "--createdatabase";
+    public final static String CREATETABLE = "--createtable";
+    public final static String QUERY = "--query";
+    public final static String INSERT = "--insert";
+    public final static String BASEURL = "jdbc:mysql://localhost/";
+    public final static String DROPDATABASE = "--dropdatabase";
+    public final static String DROPTABLE = "--droptable";
     public static Action getAction(String action){
         switch (action) {
-            case MVRequest.LOGIN:
+            case LOGIN:
                 return new LoginAction();
             case MVRequest.INIT:
                 return new InitAction();
-            case MVRequest.USE:
+            case USE:
                 return new UseDatabaseAction();
-            case MVRequest.CREATEDATABASE:
+            case CREATEDATABASE:
                 return new CreateDatabaseAction();
-            case MVRequest.DROPDATABASE:
+            case DROPDATABASE:
                 return new DropDatabaseAction();
-            case MVRequest.CREATETABLE:
+            case CREATETABLE:
                 return new CreateTableAction();
-            case MVRequest.DROPTABLE:
+            case DROPTABLE:
                 return new DropTableAction();
-            case MVRequest.INSERT:
+            case INSERT:
                 return new InsertAction();
         }
         return null;
