@@ -15,4 +15,6 @@ public class MysqlVi {
             e.printStackTrace();
         }
     }
+    public void deBug(String[] args) {
+    }
 }
