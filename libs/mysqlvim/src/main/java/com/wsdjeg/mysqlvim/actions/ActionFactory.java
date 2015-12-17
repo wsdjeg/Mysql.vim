@@ -32,7 +32,7 @@ public class ActionFactory {
             case INSERT:
                 return new InsertAction();
         }
-        return null;
+        return null
     }
     public static String[] getArgs(String[] args){
         if (args.length>=2) {
