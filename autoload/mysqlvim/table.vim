@@ -1,10 +1,13 @@
 let s:save_cpo = &cpo
 set cpo&vim
-let s:tables = {}
+let s:tables = []
 
 function! mysqlvim#table#Add_table_names(tables) abort
     let tables = split(a:tables,' ')
-    echo len(tables)
+    for a in tables
+        call add(s:tables, a)
+    endfor
+    echo len(s:tables)
 endfunction
 
 

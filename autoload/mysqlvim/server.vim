@@ -2,10 +2,12 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 
-let s:request = {''}
+let s:request = {}
 
-
-
+function! mysqlvim#server#Getresponse()
+    let s:response = {}
+    return s:response
+endfunction
 
 
 
