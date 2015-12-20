@@ -9,7 +9,7 @@ function! s:JobHandler(job_id,data,event) abort
       else
         let str = ' exited'
       endif
-      echo a:event
+      echomsg str
 endfunction
 
 let s:callbacks = {
@@ -17,8 +17,6 @@ let s:callbacks = {
             \ 'on_stderr': function('s:JobHandler'),
             \ 'on_exit': function('s:JobHandler')
             \ }
-
-let job2 = jobstart(['java','Foo'], s:callbacks)
-
+let job2 = jobstart(['java','-cp','/home/wsdjeg/.vim/bundle/Mysql.vim','Foo'], extend({'shell': 'shell 1'}, s:callbacks))
 let &cpo = s:save_cpo
 unlet s:save_cpo
