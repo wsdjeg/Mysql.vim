@@ -31,6 +31,8 @@ public class ActionFactory {
                 return new DropTableAction();
             case INSERT:
                 return new InsertAction();
+            case QUERY:
+                return new QueryForListAction();
         }
         return null;
     }

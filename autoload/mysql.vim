@@ -81,6 +81,11 @@ fu! mysql#SQL_Create(...)
     endif
 endf
 
+function! mysql#SQL_Query(...) abort
+    if s:hasSQLConnection() && s:hasDatabaseName()
+    endif
+endfunction
+
 function! mysql#SQL_Use(...)
     if s:hasSQLConnection()
         if a:1 == ''

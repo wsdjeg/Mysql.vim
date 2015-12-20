@@ -19,3 +19,6 @@ command! -nargs=*
 command! -nargs=*
             \ SQLSelect
             \ call mysql#SQL_Select(<q-args>)
+command! -nargs=*
+            \ SQLQuery
+            \ call mysql#SQL_Query(<q-args>)
