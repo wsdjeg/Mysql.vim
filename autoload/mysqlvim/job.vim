@@ -16,10 +16,12 @@ function! s:JobHandler(job_id,data,event) abort
 endfunction
 
 let s:callbacks = {
+            \ 'on_stdin':function('s:JobHandler'),
             \ 'on_stdout': function('s:JobHandler'),
             \ 'on_stderr': function('s:JobHandler'),
             \ 'on_exit': function('s:JobHandler')
             \ }
-let job2 = jobstart(['java','-cp','/home/wsdjeg/.vim/bundle/Mysql.vim','Foo'], s:callbacks)
+let job1 = jobstart(['bash'], extend({'shell': 'shell 1'}, s:callbacks))
+"let job2 = jobstart(['java','-cp','/home/wsdjeg/.vim/bundle/Mysql.vim','Foo'], s:callbacks)
 let &cpo = s:save_cpo
 unlet s:save_cpo
