@@ -22,3 +22,9 @@ command! -nargs=*
 command! -nargs=*
             \ SQLQuery
             \ call mysql#SQL_Query(<q-args>)
+command! -nargs=0
+            \ SQLDebug
+            \ call mysqlvim#utils#GetDMessage()
+command! -nargs=0
+            \ SQLDebugEmpty
+            \ call mysqlvim#utils#EmptyDMessage()

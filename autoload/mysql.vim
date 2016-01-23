@@ -89,7 +89,7 @@ endfunction
 function! mysql#SQL_Use(...)
     if s:hasSQLConnection()
         if a:1 == ''
-            let s = input("please insert a databaseName?")
+            let s = input("please insert a databaseName : ")
             echon "\r\r"
             echon ''
         else
