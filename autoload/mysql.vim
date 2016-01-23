@@ -206,6 +206,7 @@ function! mysql#SQL_Insert(...)
             let cmd .= ' '.a
         endfor
         let out_put =split(system(cmd),'\n')
+        call mysqlvim#utils#Debug(join(out_put))
         if out_put[0]=='true'
             echo 'insert success!'
         else

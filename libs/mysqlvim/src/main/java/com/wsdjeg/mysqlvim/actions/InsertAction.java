@@ -25,7 +25,6 @@ public class InsertAction implements Action {
                 }
             }
             sql += ")";
-            System.out.println(sql);
             try {
                 Connection conn =DriverManager.getConnection(MVRequest.BASEURL+args[0],args[1],args[2]);
                 Statement s=conn.createStatement();

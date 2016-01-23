@@ -4,7 +4,7 @@ set cpo&vim
 let g:mysqlvim#utils#DMessage = ''
 
 function! mysqlvim#utils#Debug(agrs) abort
-    let g:mysqlvim#utils#DMessage .= '\n'.a:agrs
+    let g:mysqlvim#utils#DMessage .= a:agrs
 endfunction
 
 function! mysqlvim#utils#GetDMessage() abort
