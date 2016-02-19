@@ -1,2 +1,3 @@
 *.class
 libs/mysqlvim/target
+test/
