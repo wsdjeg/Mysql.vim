@@ -1,3 +1,13 @@
+let s:save_cpo = &cpo
+set cpo&vim
+
+if exists('g:mysql_loaded')
+    finish
+endif
+if !executable('mvn')&&!executable('javac')
+    echohl WarningMsg | echom "Mysql.vim need javac or maven in the PATH" | echohl None
+endif
+
 command! -nargs=*
             \ SQLGetConnection
             \ call mysql#GetConnection(<q-args>)
@@ -28,3 +38,8 @@ command! -nargs=0
 command! -nargs=0
             \ SQLDebugEmpty
             \ call mysqlvim#utils#EmptyDMessage()
+
+let g:mysql_loaded = 1
+
+let &cpo = s:save_cpo
+unlet s:save_cpo

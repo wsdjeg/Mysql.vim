@@ -21,5 +21,9 @@ function! mysqlvim#utils#args_analyzer(agrs)
 
 endfunction
 
+fu! mysqlvim#utils#compilelib()
+    exec "!mvn -f " . g:Mysql_vim_Home . join(['','libs','mysqlvim','','pom.xml'],'/') .' clean compile'
+endf
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
