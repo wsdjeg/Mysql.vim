@@ -23,7 +23,14 @@ endfunction
 
 fu! mysqlvim#utils#compilelib()
     exec "!mvn -f " . g:Mysql_vim_Home . join(['','libs','mysqlvim','','pom.xml'],'/') .' clean compile'
+    let job2 = jobstart(['mvn','-f',g:Mysql_vim_Home . join(['','libs','mysqlvim','','pom.xml'],'/'),'pom.xml'], s:callbacks)
 endf
 
+let s:callbacks = {
+            \ 'on_stdin':function('mysqlvim#job#Compile_lib_Handler'),
+            \ 'on_stdout': function('mysqlvim#job#Compile_lib_Handler'),
+            \ 'on_stderr': function('mysqlvim#job#Compile_lib_Handler'),
+            \ 'on_exit': function('mysqlvim#job#Compile_lib_Handler')
+            \ }
 let &cpo = s:save_cpo
 unlet s:save_cpo
