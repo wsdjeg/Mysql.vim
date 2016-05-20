@@ -1,0 +1,6 @@
+{
+  "name": "Mysql.vim",
+  "tagline": "",
+  "body": "##Mysql.vim\r\n\r\nvim plugin that support use mysql val vim\r\n\r\n###commands\r\n\r\n`SQLGetConnection` get the connection of mysql,need two args , uaername and password\r\n\r\n`SQLUse` use database\r\n\r\n`SQLCloseConnection` close the connection\r\n\r\n`SQLCreate` create table example: `SQLCreate product price int(25) name char(255)`\r\n\r\n`SQLDrop` drop table or database : `SQLDrop table test` or `SQLDrop database product`\r\n\r\n`SQLInsert` insert date to table : `SQLInsert user age name 12 james`\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
