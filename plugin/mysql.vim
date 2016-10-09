@@ -6,6 +6,7 @@ if exists('g:mysql_loaded')
 endif
 if !executable('mvn')&&!executable('javac')
     echohl WarningMsg | echom "Mysql.vim need javac or maven in the PATH" | echohl None
+    finish
 endif
 
 command! -nargs=*

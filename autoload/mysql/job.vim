@@ -1,7 +1,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-fu! mysqlvim#job#Compile_lib_Handler(job_id,data,event) abort
+fu! mysql#job#Compile_lib_Handler(job_id,data,event) abort
     if a:event == 'stdout'
         let str = ' stdout: '.join(a:data)
         echomsg str

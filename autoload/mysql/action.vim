@@ -5,7 +5,7 @@ let s:action = {}
 let s:action.type = ''
 let s:action.userinfo = ''
 let s:action.args = []
-function! mysqlvim#action#get_action(...)
+function! mysql#action#get_action(...)
     if len(a:000) == 1
         let s:action.type == a:1
     elseif len(a:000) >= 4
@@ -13,11 +13,10 @@ function! mysqlvim#action#get_action(...)
     return s:action.type
 endfunction
 
-function! mysqlvim#action#Get_connection(action) abort
-    
+function! mysql#action#Get_connection(action) abort
 endfunction
 
-function! mysqlvim#action#execsql(sql) abort
+function! mysql#action#execsql(sql) abort
     let result = ''
     return result
 endfunction

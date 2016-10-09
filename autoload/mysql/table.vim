@@ -2,7 +2,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 let s:tables = []
 
-function! mysqlvim#table#Add_table_names(tables) abort
+function! mysql#table#Add_table_names(tables) abort
     let tables = split(a:tables,' ')
     for a in tables
         call add(s:tables, a)

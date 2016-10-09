@@ -1,28 +1,28 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:mysqlvim#utils#DMessage = ''
+let g:mysql#utils#DMessage = ''
 
-function! mysqlvim#utils#Debug(agrs) abort
-    let g:mysqlvim#utils#DMessage .= a:agrs
+function! mysql#utils#Debug(agrs) abort
+    let g:mysql#utils#DMessage .= a:agrs
 endfunction
 
-function! mysqlvim#utils#GetDMessage() abort
-    echomsg g:mysqlvim#utils#DMessage
+function! mysql#utils#GetDMessage() abort
+    echomsg g:mysql#utils#DMessage
 endfunction
 
-function! mysqlvim#utils#EmptyDMessage() abort
-    unlet g:mysqlvim#utils#DMessage
-    let g:mysqlvim#utils#DMessage = ''
+function! mysql#utils#EmptyDMessage() abort
+    unlet g:mysql#utils#DMessage
+    let g:mysql#utils#DMessage = ''
     echo 'Empty Debug Message successful!'
 endfunction
 
-function! mysqlvim#utils#args_analyzer(agrs)
+function! mysql#utils#args_analyzer(agrs)
 
 endfunction
 
-fu! mysqlvim#utils#compilelib()
-    call jobstart(['mvn','-f',g:Mysql_vim_Home . join(['','libs','mysqlvim','','pom.xml'],'/'),'compile'], s:compile_lib_callbacks)
+fu! mysql#utils#compilelib()
+    call jobstart(['mvn','-f',g:Mysql_vim_Home . join(['','libs','mysql','','pom.xml'],'/'),'compile'], s:compile_lib_callbacks)
 endf
 
 fu! s:Compile_lib_JobHandler(job_id,data,event) abort
@@ -39,7 +39,7 @@ fu! s:Compile_lib_JobHandler(job_id,data,event) abort
         if a:data == '0'
             echomsg "Mysqlvim libs builded successfully"
         else
-            echomsg "Failed to build mysqlvim"
+            echomsg "Failed to build mysql"
         endif
     endif
 endfunction

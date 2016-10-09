@@ -4,7 +4,7 @@ set cpo&vim
 
 let s:request = {}
 
-function! mysqlvim#server#Getresponse()
+function! mysql#server#Getresponse()
     let s:response = {}
     return s:response
 endfunction
