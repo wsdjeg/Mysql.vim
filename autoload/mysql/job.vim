@@ -2,13 +2,13 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 fu! mysql#job#Compile_lib_Handler(job_id,data,event) abort
-    if a:event == 'stdout'
-        let str = ' stdout: '.join(a:data)
+    if a:event ==# 'stdout'
+        let str = a:job_id .' stdout: '.join(a:data)
         echomsg str
-    elseif a:event == 'stderr'
+    elseif a:event ==# 'stderr'
         let str = ' stderr: '.join(a:data)
         echomsg str
-    elseif a:event == 'stdin'
+    elseif a:event ==# 'stdin'
         echo a:data
     else
         let str = ' exited'
@@ -17,13 +17,13 @@ fu! mysql#job#Compile_lib_Handler(job_id,data,event) abort
 endf
 
 function! s:JobHandler(job_id,data,event) abort
-    if a:event == 'stdout'
+    if a:event ==# 'stdout'
         let str = ' stdout: '.join(a:data)
-        echomsg str
-    elseif a:event == 'stderr'
+        echomsg 'job:' . a:job_id . ' ' . str
+    elseif a:event ==# 'stderr'
         let str = ' stderr: '.join(a:data)
         echomsg str
-    elseif a:event == 'stdin'
+    elseif a:event ==# 'stdin'
         echo a:data
     else
         let str = ' exited'

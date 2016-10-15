@@ -14,9 +14,13 @@ function! mysql#action#get_action(...) abort
 endfunction
 
 function! mysql#action#Get_connection(action) abort
+    echo a:action
 endfunction
 
 function! mysql#action#execsql(sql) abort
+    if a:sql ==# ''
+        finish
+    endif
     let result = ''
     return result
 endfunction
