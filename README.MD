@@ -1,5 +1,7 @@
 ##Mysql.vim
 
+[![Build Status](https://travis-ci.org/wsdjeg/Mysql.vim.svg?branch=master)](https://travis-ci.org/wsdjeg/Mysql.vim)
+
 vim plugin that support use mysql val vim
 
 ###commands
