@@ -225,6 +225,7 @@ fu! mysql#SQL_Select(...)
                     \.' '
                     \.s:userinfo
                     \.' '
+        let cmd = cmd . join(a:000, ' ')
         "TODO
     endif
 endf

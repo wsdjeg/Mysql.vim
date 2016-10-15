@@ -5,7 +5,7 @@ set cpoptions&vim
 let s:request = {}
 
 function! mysql#server#Communicate(id, data) abort
-    let s:response = ''
+    let s:response = a:id . ' ' . a:data
     return s:response
 endfunction
 
