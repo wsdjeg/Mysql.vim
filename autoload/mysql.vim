@@ -1,17 +1,18 @@
-if exists("g:Mysql_autoloaded")&&g:Mysql_autoloaded==1
+if get(g:, 'Mysql_autoloaded', 0) == 1
     finish
 else
     let g:Mysql_autoloaded=1
     let g:Mysql_vim_Home = fnamemodify(expand('<sfile>'), ':p:h:h:gs?\\?/?')
 endif
 
-fu! mysql#GetMysql_vim_classpath()
-    if executable('mvn')
-        let mysqlvimdir = g:Mysql_vim_Home.'/libs/mysqlvim'
-        let lines = split(system('mvn -f '.mysqlvimdir.'/pom.xml dependency:build-classpath'),'\n')
+fu! mysql#GetMysql_vim_classpath() abort
+    if executable('mvn') && get(s:, 'classpath', '')  ==# ''
+        let l:mysqlvimdir = g:Mysql_vim_Home.'/libs/mysqlvim'
+        let lines = split(system('mvn -f '. l:mysqlvimdir. '/pom.xml dependency:build-classpath'),'\n')
         for i in range(len(lines))
             if lines[i] =~ 'Dependencies classpath:'
-                return lines[i+1].':'.mysqlvimdir.'/target/classes'
+                let s:classpath = lines[i+1].':'.mysqlvimdir.'/target/classes'
+                return s:classpath
             endif
         endfor
     endif

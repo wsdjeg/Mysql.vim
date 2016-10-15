@@ -1,16 +1,16 @@
-let s:save_cpo = &cpo
-set cpo&vim
+let s:save_cpo = &cpoptions
+set cpoptions&vim
 
 
 let s:request = {}
 
-function! mysql#server#Getresponse()
-    let s:response = {}
+function! mysql#server#Communicate(id, data) abort
+    let s:response = ''
     return s:response
 endfunction
 
 
 
 
-let &cpo = s:save_cpo
+let &cpoptions = s:save_cpo
 unlet s:save_cpo
