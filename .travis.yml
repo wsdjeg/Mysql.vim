@@ -3,7 +3,8 @@ language: python
 
 cache:
   pip: true
-
+  directories:
+    - $HOME/.m2
 env:
   matrix:
     - LINT=vimlint-errors
