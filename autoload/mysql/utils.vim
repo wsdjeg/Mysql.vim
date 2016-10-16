@@ -22,7 +22,7 @@ function! mysql#utils#args_analyzer(agrs) abort
 endfunction
 
 fu! mysql#utils#compilelib() abort
-    call jobstart(['mvn','-f',g:Mysql_vim_Home . join(['','libs','mysql','','pom.xml'],'/'),'compile'], s:compile_lib_callbacks)
+    call jobstart(['mvn','-f',g:Mysql_vim_Home . join(['','libs','mysqlvim','','pom.xml'],'/'),'compile'], s:compile_lib_callbacks)
 endf
 
 fu! s:Compile_lib_JobHandler(job_id,data,event) abort
@@ -32,7 +32,7 @@ fu! s:Compile_lib_JobHandler(job_id,data,event) abort
         endfor
     elseif a:event ==# 'stderr'
         for msg in filter(a:data,'v:val !~# "^\\s*$"')
-            echoerr msg
+            echomsg 'job: ' a:job_id . 'messags: '. msg
         endfor
     else
         if a:data ==# '0'
